@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Working Hours Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Employee Working Hours Calculator</h2>
+    <form id="hoursForm">
+        <label for="empName">Employee Name:</label>
+        <input type="text" id="empName" placeholder="Enter employee name" required>
+
+        <label for="empId">Employee ID:</label>
+        <input type="text" id="empId" placeholder="Enter employee ID" required>
+
+        <label for="checkIn">Check-in Time:</label>
+        <input type="time" id="checkIn" required>
+
+        <label for="checkOut">Check-out Time:</label>
+        <input type="time" id="checkOut" required>
+
+        <button type="button" onclick="calculateHours()">Calculate Hours</button>
+
+        <div class="result" id="result"></div>
+    </form>
+</div>
+
+<script>
+    function calculateHours() {
+        const checkInTime = document.getElementById('checkIn').value;
+        const checkOutTime = document.getElementById('checkOut').value;
+        
+        if (checkInTime && checkOutTime) {
+            const startTime = new Date(`01/01/2022 ${checkInTime}`);
+            const endTime = new Date(`01/01/2022 ${checkOutTime}`);
+            
+            const diff = endTime - startTime;
+            
+            if (diff >= 0) {
+                const hours = Math.floor(diff / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                
+                document.getElementById('result').textContent = 
+                    `Total Working Hours: ${hours} hours and ${minutes} minutes`;
+            } else {
+                document.getElementById('result').textContent = 
+                    "Check-out time must be later than Check-in time!";
+            }
+        } else {
+            document.getElementById('result').textContent = 
+                "Please fill in all the fields!";
+        }
+    }
+</script>
+
+</body>
+</html>
